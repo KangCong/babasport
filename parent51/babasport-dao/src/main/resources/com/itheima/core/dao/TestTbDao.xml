@@ -1,0 +1,32 @@
+<?xml version= "1.0" encoding ="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.core.dao.TestTbDao">
+	<!-- 保存 -->
+	<insert id="insertTestTb" parameterType="TestTb">
+		insert into test_tb
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id !=''">
+				id,
+			</if>
+			<if test="name != null and name !=''">
+				name,
+			</if>
+			<if test="birthday != null and birthday !=''">
+				birthday
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null and id !=''">
+				#{id},
+			</if>
+			<if test="name != null and name !=''">
+				#{name},
+			</if>
+			<if test="birthday != null and birthday !=''">
+				#{birthday}
+			</if>
+		</trim>
+	</insert>
+</mapper>

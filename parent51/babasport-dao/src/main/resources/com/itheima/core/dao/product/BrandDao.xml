@@ -1,0 +1,88 @@
+<?xml version= "1.0" encoding ="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.core.dao.product.BrandDao">
+	<!-- //查询品牌列表
+	public List<BrandQuery> selectBrandListByQuery(BrandQuery brandQuery); -->
+	<resultMap type="Brand" id="brand">
+		<result column="img_url" property="imgUrl"/>
+		<result column="is_display" property="isDisplay"/>
+	</resultMap>
+	<select id="selectBrandListByQuery" parameterType="brandQuery" resultMap="brand">
+		select id,name,description,img_url,sort,is_display
+		from bbs_brand
+		<where>
+			<if test="name != null">
+				name like "%"#{name}"%"
+			</if>
+			<if test="isDisplay != null">
+				and is_display = #{isDisplay}
+			</if>
+		</where>
+		<if test="startRow != null">
+			limit #{startRow},#{pageSize}
+		</if>
+	</select>
+	
+	<!-- //查询总数量
+	public Integer totalCount(); -->
+	
+	<select id="totalCount" parameterType="BrandQuery" resultType="Integer">
+		select count(1) from bbs_brand
+		<where>
+			<if test="name != null">
+				name like "%"#{name}"%"
+			</if>
+			<if test="isDisplay != null">
+				and is_display = #{isDisplay}
+			</if>
+		</where>
+	</select>
+	
+	<!-- //查询品牌
+	public Brand selectBrandById(Long id); -->
+	<select id="selectBrandById" parameterType="Long" resultMap="brand">
+		select id,name,description,img_url,sort,is_display
+		from bbs_brand
+		where id=#{id}
+	</select>
+	
+	<!-- //更新品牌信息
+	public void editBrandById(Brand brand); -->
+	<update id="editBrandById" parameterType="Brand" >
+		update bbs_brand
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="imgUrl != null">
+				img_url = #{imgUrl},
+			</if>
+			<if test="sort != null">
+				sort = #{sort},
+			</if>
+			<if test="isDisplay != null">
+				is_display = #{isDisplay}
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- //批量删除
+	public void deleteMultiBrandById(Long[] ids); -->
+	<delete id="deleteMultiBrandById" parameterType="Long[]">
+		delete from bbs_brand
+		<where>
+			id in
+			<foreach collection="array" open="(" close=")" separator="," item="id">
+				#{id}
+			</foreach>
+		</where>
+	</delete>
+	
+</mapper>

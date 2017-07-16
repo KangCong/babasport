@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/task
+   		http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo        
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<!-- 服务提供方 -->
+	<!-- 服务启动名称 -->
+	<dubbo:application name="babasport-service-buyer" />
+	<!-- 连接zookeeper注册中心 -->
+	<!-- <dubbo:registry address="192.168.148.130:2181" protocol="zookeeper"/> -->
+	<!-- 设置dubbo直接连接,不通过注册中心. 开发使用 -->
+	<dubbo:registry address="N/A"/>
+	<!-- 配置端口号 默认20881 -->
+	<dubbo:protocol port="20883"/>
+	<!-- 配置对外暴露的接口 -->
+	<!-- <dubbo:service interface="com.itheima.core.service.TestTbService" ref="testTbService"/> -->
+		<!-- 用户登录搜索 -->
+	<dubbo:service interface="com.itheima.core.service.search.BuyerService" ref="buyerService"/>
+		
+	<dubbo:service interface="com.itheima.core.service.search.SessionProvider" ref="sessionProvider"/>
+		
+</beans>
